@@ -14,6 +14,9 @@
                 <div class="col-sm-6">
                     <label for="name" class="form-label">Nombre</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="INGRESE UN NOMBRE PARA SU CATEGORIA" autofocus autocomplete="name" required>
+                    @error('name')
+                        <span style="color: red;">{{ $message }} </span><br/>
+                    @enderror
                 </div>
                 <div class="col-sm-3">
                     <button type="submit" class="btn btn-success m-b-s-a">Guardar</button>
