@@ -1,11 +1,10 @@
 @extends('adminlte::page')
 
-@section('title' , 'Categorias')
+@section('title' , 'Instalaciones')
 
 @section('content_header')
 <div class="d-flex justify-content-between">
-    <h1>Categorias</h1>
-    <a href="{{route('categories.create')}}" class="btn btn-outline-success">Añadir</a>
+    <h1>Instalaciones</h1>
 </div>   
 
 @stop
@@ -20,24 +19,28 @@
             <tr>
                 <th>#</th>
                 <th>Codigo</th>
-                <th>Categoria</th>
+                <th>Instalacion</th>
+                <th>Cliente / Compañia</th>
+                <th>Area</th>
                 <th>Opciones</th>
             </tr>
         </thead>
         <tbody class="text-center">
-            @foreach ($categories as $categorie)
+            @foreach ($installations as $installation)
                 <tr>
                     <td>{{$count}}</td>
-                    <td>{{$categorie->code}}</td>
-                    <td>{{$categorie->name}}</td>
+                    <td>{{$installation->code}}</td>
+                    <td>{{$installation->name}}</td>
+                    <td>{{$installation->client->name . ' / ' . $installation->client->company}}</td>
+                    <td>{{$installation->area->name}}</td>
                     <td class="d-flex justify-content-center">
-                        <form action="{{route('categories.destroy', $categorie)}}" method="post">
+                        <form action="{{route('installations.destroy', $installation)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')">Borrar</button>
                         </form>
-                        <a href="{{route('categories.edit', $categorie)}}" class="btn btn-outline-warning">Editar</a>
-                        {{-- <a href="{{route('ports.create', $categorie->id)}}" class="btn btn-outline-success">Add Ports</a> --}}
+                        <a href="{{route('installations.edit', $installation)}}" class="btn btn-outline-warning">Editar</a>
+                        <a href="{{route('projects.create', $installation)}}" class="btn btn-outline-success">Agregar Proyectos</a>
                     </td>
                 </tr>
                 @php

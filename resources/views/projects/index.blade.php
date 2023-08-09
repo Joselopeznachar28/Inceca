@@ -1,11 +1,10 @@
 @extends('adminlte::page')
 
-@section('title' , 'Categorias')
+@section('title' , 'Proyectos')
 
 @section('content_header')
 <div class="d-flex justify-content-between">
-    <h1>Categorias</h1>
-    <a href="{{route('categories.create')}}" class="btn btn-outline-success">Añadir</a>
+    <h1>Proyectos</h1>
 </div>   
 
 @stop
@@ -20,24 +19,27 @@
             <tr>
                 <th>#</th>
                 <th>Codigo</th>
-                <th>Categoria</th>
+                <th>Proyecto</th>
+                <th>Instalacion</th>
                 <th>Opciones</th>
             </tr>
         </thead>
         <tbody class="text-center">
-            @foreach ($categories as $categorie)
+            @foreach ($projects as $project)
                 <tr>
                     <td>{{$count}}</td>
-                    <td>{{$categorie->code}}</td>
-                    <td>{{$categorie->name}}</td>
+                    <td>{{$project->code}}</td>
+                    <td>{{$project->name}}</td>
+                    <td>{{$project->installation_id}}</td>
                     <td class="d-flex justify-content-center">
-                        <form action="{{route('categories.destroy', $categorie)}}" method="post">
+                        <form action="{{route('projects.destroy', $project)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')">Borrar</button>
                         </form>
-                        <a href="{{route('categories.edit', $categorie)}}" class="btn btn-outline-warning">Editar</a>
-                        {{-- <a href="{{route('ports.create', $categorie->id)}}" class="btn btn-outline-success">Add Ports</a> --}}
+                        <a href="{{route('projects.edit', $project)}}" class="btn btn-outline-warning">Editar</a>
+                        <a href="{{route('projects.show', $project)}}" class="btn btn-outline-info">Detalles</a>
+                        <a href="{{route('announcements.create', $project)}}" class="btn btn-outline-info">Agregar Aviso</a>
                     </td>
                 </tr>
                 @php

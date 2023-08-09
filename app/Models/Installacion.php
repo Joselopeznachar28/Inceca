@@ -13,14 +13,19 @@ class Installacion extends Model
         'name',
         'description',
         'code',
-        'area_id'
+        'area_id',
+        'client_id',
     ];
 
     public function area(){
         return $this->belongsTo(Area::class);
     }
 
-    public function project(){
+    public function projects(){
         return $this->hasMany(Project::class);
+    }
+
+    public function client(){
+        return $this->belongsTo(Client::class);
     }
 }

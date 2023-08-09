@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('description');
             $table->uuid('code')->unique();
             $table->foreignId('area_id')->constrained('areas')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('client_id')->constrained('clients')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -1,11 +1,10 @@
 @extends('adminlte::page')
 
-@section('title' , 'Categorias')
+@section('title' , 'Anuncios')
 
 @section('content_header')
 <div class="d-flex justify-content-between">
-    <h1>Categorias</h1>
-    <a href="{{route('categories.create')}}" class="btn btn-outline-success">Añadir</a>
+    <h1>Anuncios</h1>
 </div>   
 
 @stop
@@ -20,24 +19,28 @@
             <tr>
                 <th>#</th>
                 <th>Codigo</th>
-                <th>Categoria</th>
+                <th>Proyecto</th>
+                <th>Aviso</th>
+                <th>Fecha</th>
                 <th>Opciones</th>
             </tr>
         </thead>
         <tbody class="text-center">
-            @foreach ($categories as $categorie)
+            @foreach ($announcements as $announcement)
                 <tr>
                     <td>{{$count}}</td>
-                    <td>{{$categorie->code}}</td>
-                    <td>{{$categorie->name}}</td>
+                    <td>{{$announcement->code}}</td>
+                    <td>{{$announcement->project->name}}</td>
+                    <td>{{$announcement->name}}</td>
+                    <td>{{$announcement->date}}</td>
                     <td class="d-flex justify-content-center">
-                        <form action="{{route('categories.destroy', $categorie)}}" method="post">
+                        <form action="{{route('announcements.destroy', $announcement)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')">Borrar</button>
                         </form>
-                        <a href="{{route('categories.edit', $categorie)}}" class="btn btn-outline-warning">Editar</a>
-                        {{-- <a href="{{route('ports.create', $categorie->id)}}" class="btn btn-outline-success">Add Ports</a> --}}
+                        <a href="{{route('announcements.edit', $announcement)}}" class="btn btn-outline-warning">Editar</a>
+                        <a href="{{route('announcements.show', $announcement)}}" class="btn btn-outline-info">Detalles</a>
                     </td>
                 </tr>
                 @php

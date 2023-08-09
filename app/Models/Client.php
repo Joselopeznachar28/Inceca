@@ -12,17 +12,21 @@ class Client extends Model
     protected $fillable = [
         'name',
         'company',
-        'type_identification',
         'identification',
         'address',
         'phone',
         'email',
         'country',
         'city',
+        'state',
         'category_id',
     ];
 
     public function category(){
         return $this->belongsTo(Category::class);
+    }
+
+    public function installations(){
+        return $this->hasMany(Installacion::class);
     }
 }

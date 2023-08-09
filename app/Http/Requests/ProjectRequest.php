@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class ProjectRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,17 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'description' => 'required',
+            'installation_id' => 'required',
         ];
-        
     }
 
     public function messages()
     {
         return [
             'name.required' => 'Este campo es requerido',
+            'description.required' => 'Este campo es requerido',
+            'installation_id.required' => 'Este campo es requerido',
         ];
     }
 }

@@ -313,7 +313,7 @@ return [
         ],
         [
             'text'        => 'Dashboard',
-            'url'         => '#',
+            'route'       => 'home',
             'icon'        => 'far fa-fw fa-file',
         ],
         [
@@ -323,22 +323,22 @@ return [
         ],
         [
             'text' => 'Areas',
-            'url'  => '#',
+            'route'  => 'areas.index',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
             'text' => 'Clientes',
-            'url'  => '#',
+            'route'  => 'clients.index',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
-            'text' => 'Instalaciones',
-            'url'  => '#',
-            'icon' => 'fas fa-fw fa-lock',
+            'text'   => 'Instalaciones',
+            'route'  => 'installations.index',
+            'icon'   => 'fas fa-fw fa-lock',
         ],
         [
             'text' => 'Proyectos',
-            'url'  => '#',
+            'route'  => 'projects.index',
             'icon' => 'fas fa-fw fa-lock',
         ],
         [
@@ -348,7 +348,7 @@ return [
         ],
         [
             'text' => 'Avisos',
-            'url'  => '#',
+            'route'  => 'announcements.index',
             'icon' => 'fas fa-fw fa-lock',
         ],
          /*[

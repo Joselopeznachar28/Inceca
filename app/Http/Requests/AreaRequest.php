@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoryRequest extends FormRequest
+class AreaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,14 +23,20 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'address' => 'min:5|required',
         ];
-        
     }
 
     public function messages()
     {
         return [
             'name.required' => 'Este campo es requerido',
+            'state.required' => 'Este campo es requerido',
+            'city.required' => 'Este campo es requerido',
+            'address.required' => 'Este campo es requerido',
+            'address.min' => 'Este campo debe contener almenos 5 digitos',
         ];
     }
 }

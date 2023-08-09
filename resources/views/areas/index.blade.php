@@ -1,11 +1,11 @@
 @extends('adminlte::page')
 
-@section('title' , 'Categorias')
+@section('title' , 'Areas')
 
 @section('content_header')
 <div class="d-flex justify-content-between">
-    <h1>Categorias</h1>
-    <a href="{{route('categories.create')}}" class="btn btn-outline-success">Añadir</a>
+    <h1>Areas</h1>
+    <a href="{{route('areas.create')}}" class="btn btn-outline-success">Añadir</a>
 </div>   
 
 @stop
@@ -20,23 +20,29 @@
             <tr>
                 <th>#</th>
                 <th>Codigo</th>
-                <th>Categoria</th>
+                <th>Nombre</th>
+                <th>Estado</th>
+                <th>Ciudad</th>
+                <th>Ubicacion</th>
                 <th>Opciones</th>
             </tr>
         </thead>
         <tbody class="text-center">
-            @foreach ($categories as $categorie)
+            @foreach ($areas as $area)
                 <tr>
                     <td>{{$count}}</td>
-                    <td>{{$categorie->code}}</td>
-                    <td>{{$categorie->name}}</td>
+                    <td>{{$area->code}}</td>
+                    <td>{{$area->name}}</td>
+                    <td>{{$area->state}}</td>
+                    <td>{{$area->city}}</td>
+                    <td>{{$area->address}}</td>
                     <td class="d-flex justify-content-center">
-                        <form action="{{route('categories.destroy', $categorie)}}" method="post">
+                        <form action="{{route('areas.destroy', $area)}}" method="post">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')">Borrar</button>
                         </form>
-                        <a href="{{route('categories.edit', $categorie)}}" class="btn btn-outline-warning">Editar</a>
+                        <a href="{{route('areas.edit', $area)}}" class="btn btn-outline-warning">Editar</a>
                         {{-- <a href="{{route('ports.create', $categorie->id)}}" class="btn btn-outline-success">Add Ports</a> --}}
                     </td>
                 </tr>

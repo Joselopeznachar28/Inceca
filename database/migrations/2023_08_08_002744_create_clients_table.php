@@ -15,13 +15,13 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('company')->unique();
-            $table->string('type_identification');
             $table->string('identification')->unique();
             $table->string('address');
             $table->string('phone')->unique();
             $table->string('email')->unique();
             $table->string('country');
             $table->string('city');
+            $table->string('state');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

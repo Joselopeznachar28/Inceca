@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -17,7 +18,7 @@ class CategoryController extends Controller
         return view('categories.create');
     }
 
-    function store(Request $request){
+    function store(CategoryRequest $request){
 
         $categorie = new Category();
 
@@ -32,7 +33,7 @@ class CategoryController extends Controller
         return view('categories.edit',compact('category'));
     }
 
-    function update(Request $request, Category $category){
+    function update(CategoryRequest $request, Category $category){
         
         $category = Category::findOrFail($category->id)->update([
             'name' =>  request('name'),
