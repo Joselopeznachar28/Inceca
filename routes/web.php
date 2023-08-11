@@ -1,11 +1,16 @@
 <?php
 
+use App\Http\Controllers\AdministrativeProcessController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\ControlController;
+use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\InstallacionController;
+use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\PlanificationController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -77,3 +82,40 @@ Route::get('Editar/Anuncio/{announcement:name}', [AnnouncementController::class,
 Route::put('Editar/Anuncio/{announcement:name}', [AnnouncementController::class, 'update'])->name('announcements.update');
 Route::get('Detalles/Anuncio/{announcement:name}', [AnnouncementController::class, 'show'])->name('announcements.show');
 Route::delete('Anuncio/{announcement:name}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
+
+//administrative processes
+Route::get('Procesos/Administrativos', [AdministrativeProcessController::class, 'index'])->name('processes.index');
+// Route::get('Crear/Proceso/Proyecto/{project:name}', [AdministrativeProcessController::class, 'create'])->name('processes.create');
+Route::post('Proceso/Administrativo', [AdministrativeProcessController::class, 'store'])->name('processes.store');
+// Route::get('Editar/Proceso/Administrativo/{process:name}', [AdministrativeProcessController::class, 'edit'])->name('processes.edit');
+// Route::put('Editar/Proceso/Administrativo/{process:name}', [AdministrativeProcessController::class, 'update'])->name('processes.update');
+Route::get('Detalles/Proceso/Administrativo/{id}', [AdministrativeProcessController::class, 'show'])->name('processes.show');
+// Route::delete('Proceso/Administrativo/{process:name}', [AdministrativeProcessController::class, 'destroy'])->name('processes.destroy');
+
+//Planification
+Route::get('Crear/Planificacion/FaseI/Proceso/{id}', [PlanificationController::class, 'create'])->name('planifications.create');
+Route::post('Planificacion', [PlanificationController::class, 'store'])->name('planifications.store');
+Route::get('Editar/Planificacion/{id}', [PlanificationController::class, 'edit'])->name('planifications.edit');
+Route::put('Editar/Planificacion/{id}', [PlanificationController::class, 'update'])->name('planifications.update');
+Route::get('FaseI/Finalizada', [PlanificationController::class, 'changeFinishStatus'])->name('changeFinishStatusPlanification');
+
+//Organization
+Route::get('Crear/Organizacion/Fase II/Proceso/{id}', [OrganizationController::class, 'create'])->name('organizations.create');
+Route::post('Organizacion', [OrganizationController::class, 'store'])->name('organizations.store');
+Route::get('Editar/Organizacion/{id}', [OrganizationController::class, 'edit'])->name('organizations.edit');
+Route::put('Editar/Organizacion/{id}', [OrganizationController::class, 'update'])->name('organizations.update');
+Route::get('FaseII/Finalizada', [OrganizationController::class, 'changeFinishStatus'])->name('changeFinishStatusOrganization');
+
+//Direction
+Route::get('Crear/Direccion/FaseIII/Proceso/{id}', [DirectionController::class, 'create'])->name('directions.create');
+Route::post('Direccion', [DirectionController::class, 'store'])->name('directions.store');
+Route::get('Editar/Direccion/{id}', [DirectionController::class, 'edit'])->name('directions.edit');
+Route::put('Editar/Direccion/{id}', [DirectionController::class, 'update'])->name('directions.update');
+Route::get('FaseIII/Finalizada', [DirectionController::class, 'changeFinishStatus'])->name('changeFinishStatusDirection');
+
+//Control
+Route::get('Crear/Control/FaseIV/Proceso/{id}', [ControlController::class, 'create'])->name('controls.create');
+Route::post('Control', [ControlController::class, 'store'])->name('controls.store');
+Route::get('Editar/Control/{id}', [ControlController::class, 'edit'])->name('controls.edit');
+Route::put('Editar/Control/{id}', [ControlController::class, 'update'])->name('controls.update');
+Route::get('FaseIV/Finalizada', [ControlController::class, 'changeFinishStatus'])->name('changeFinishStatusControl');

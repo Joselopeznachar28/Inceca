@@ -40,6 +40,15 @@
                         <a href="{{route('projects.edit', $project)}}" class="btn btn-outline-warning">Editar</a>
                         <a href="{{route('projects.show', $project)}}" class="btn btn-outline-info">Detalles</a>
                         <a href="{{route('announcements.create', $project)}}" class="btn btn-outline-info">Agregar Aviso</a>
+                        <form action="{{ route('processes.store') }}" method="post">
+                            @csrf
+                            <input type="hidden" name="project_id" value="{{ $project->id }}">
+                            @if ($project->administrativeProcess)
+                                <span class="btn btn-light">Proceso Generado</span>
+                            @else
+                                <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea generar el proceso administrativo?')">Generar Proceso</button>
+                            @endif
+                        </form>
                     </td>
                 </tr>
                 @php

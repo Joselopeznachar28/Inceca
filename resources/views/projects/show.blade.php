@@ -26,6 +26,28 @@
             </div>
         </div><br>
     </div>
+    <!-- Proceso Administrativo -->
+    <!-- Fase I -->
+    <hr><h2>Proceso Administrativo</h2><hr>
+    <h4>Fase I : Planificacion</h4>
+    <p><span class="font-weight-bold">Inicio :</span> {{ $project->administrativeProcess->planification->date_init }}</p>
+    <p><span class="font-weight-bold">Descripcion :</span> {{ $project->administrativeProcess->planification->description }}</p>
+    <p><span class="font-weight-bold">Culminacion :</span> {{ $project->administrativeProcess->planification->finish == 1 ? $project->administrativeProcess->planification->date_finish : '¡Esta Fase aun no ha culminado!' }}</p>
+    <!-- Fase II -->
+    <h4>Fase II : Organizacion</h4>
+    <p><span class="font-weight-bold">Inicio :</span> {{ $project->administrativeProcess->organization->date_init }}</p>
+    <p><span class="font-weight-bold">Descripcion :</span> {{ $project->administrativeProcess->organization->description }}</p>
+    <p><span class="font-weight-bold">Culminacion :</span> {{ $project->administrativeProcess->organization->finish == 1 ? $project->administrativeProcess->organization->date_finish : '¡Esta Fase aun no ha culminado!' }}</p>
+    <!-- Fase III -->
+    <h4>Fase III : Direccion</h4>
+    <p><span class="font-weight-bold">Inicio :</span> {{ $project->administrativeProcess->direction->date_init }}</p>
+    <p><span class="font-weight-bold">Descripcion :</span> {{ $project->administrativeProcess->direction->description }}</p>
+    <p><span class="font-weight-bold">Culminacion :</span> {{ $project->administrativeProcess->direction->finish == 1 ? $project->administrativeProcess->direction->date_finish : '¡Esta Fase aun no ha culminado!' }}</p>
+    <!-- Fase IV -->
+    <h4>Fase III : Control</h4>
+    <p><span class="font-weight-bold">Inicio :</span> {{ $project->administrativeProcess->control->date_init }}</p>
+    <p><span class="font-weight-bold">Descripcion :</span> {{ $project->administrativeProcess->control->description }}</p>
+    <p><span class="font-weight-bold">Culminacion :</span> {{ $project->administrativeProcess->control->finish == 1 ? $project->administrativeProcess->control->date_finish : '¡Esta Fase aun no ha culminado!' }}</p>
     <!-- Anuncios -->
     <hr><h2>Anuncios / Avisos</h2><hr>
     @php
@@ -46,5 +68,5 @@
         <div class="col-sm-3">
             <a type="button" href="{{ route('projects.index') }}" class="btn btn-info">Regresar</a>
         </div>
-    </div>
+    </div><br>
 @endsection

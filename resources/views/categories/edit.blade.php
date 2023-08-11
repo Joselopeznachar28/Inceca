@@ -19,8 +19,8 @@
                         <span style="color: red;">• {{ $message }} </span><br/>
                     @enderror
                 </div>
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-success m-b-s-a" onclick="return confirm('Desea actualizar los datos?')">Actualizar</button>
+                <div class="col-sm-3 m-b-s-a">
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Desea actualizar los datos?')">Actualizar</button>
                 </div>
             </div>
         </div>

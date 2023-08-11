@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('announcements', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
             $table->uuid('code')->unique();

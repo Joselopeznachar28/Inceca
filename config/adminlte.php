@@ -293,7 +293,7 @@ return [
         // Navbar items:
         [
             'type'         => 'navbar-search',
-            'text'         => 'search',
+            'text'         => 'Buscar',
             'topnav_right' => true,
         ],
         [
@@ -304,13 +304,9 @@ return [
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'Buscar',
         ],
-        [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
+        ['header'  => 'MODULOS'],
         [
             'text'        => 'Dashboard',
             'route'       => 'home',
@@ -337,20 +333,28 @@ return [
             'icon'   => 'fas fa-fw fa-lock',
         ],
         [
-            'text' => 'Proyectos',
-            'route'  => 'projects.index',
+            'text' => 'Trabajos',
             'icon' => 'fas fa-fw fa-lock',
+            'submenu' => [
+                [
+                    'text' => 'Proyectos',
+                    'route'  => 'projects.index',
+                    'icon' => 'fas fa-fw fa-lock',
+                ],
+                [
+                    'text' => 'Procesos Administrativos',
+                    'route'  => 'processes.index',
+                    'icon' => 'fas fa-fw fa-lock',
+                ],
+                [
+                    'text' => 'Avisos',
+                    'route'  => 'announcements.index',
+                    'icon' => 'fas fa-fw fa-lock',
+                ],
+            ],
         ],
-        [
-            'text' => 'Procesos Administrativos',
-            'url'  => '#',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'Avisos',
-            'route'  => 'announcements.index',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
+        
+        
          /*[
             'text'    => 'Instalaciones',
             'icon'    => 'fas fa-fw fa-share',

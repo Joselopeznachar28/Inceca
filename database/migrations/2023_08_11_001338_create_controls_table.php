@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('administrative_processes', function (Blueprint $table) {
+        Schema::create('controls', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->uuid('code')->unique();
-            $table->foreignId('project_id')->constrained('projects')->onDelete('cascade')->onUpdate('cascade');
+            $table->text('description');
+            $table->boolean('finish')->default(0);
+            $table->date('date_init');
+            $table->date('date_finish')->nullable();
+            $table->foreignId('administrative_process_id')->constrained('administrative_processes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('administrative_processes');
+        Schema::dropIfExists('controls');
     }
 };

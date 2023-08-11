@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnnouncementRequest;
 use App\Models\Announcement;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class AnnouncementController extends Controller
         return view('announcements.create',compact('project'));
     }
 
-    function store(Request $request){
+    function store(AnnouncementRequest $request){
         
         $announcement = new Announcement();
 
@@ -36,13 +37,12 @@ class AnnouncementController extends Controller
         return view('announcements.edit',compact('announcement'));
     }
 
-    function update(Request $request, Announcement $announcement){
+    function update(AnnouncementRequest $request, Announcement $announcement){
         
         $announcement = Announcement::findOrFail($announcement->id)->update([
             'name' =>  request('name'),
             'description' =>  request('description'),
             'date' =>  request('date'),
-            'code' =>  request('code'),
             'project_id' =>  request('project_id'),
         ]);
 

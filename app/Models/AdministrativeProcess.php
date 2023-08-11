@@ -10,10 +10,6 @@ class AdministrativeProcess extends Model
     use HasFactory;
 
     protected $fillable = [
-        'planification',
-        'organization',
-        'direction',
-        'control',
         'code',
         'project_id',
     ];
@@ -21,4 +17,16 @@ class AdministrativeProcess extends Model
     public function project(){
         return $this->belongsTo(Project::class);
     } 
+    public function planification(){
+        return $this->hasOne(Planification::class);
+    }
+    public function organization(){
+        return $this->hasOne(Organization::class);
+    }
+    public function direction(){
+        return $this->hasOne(Direction::class);
+    }
+    public function control(){
+        return $this->hasOne(Control::class);
+    }
 }
