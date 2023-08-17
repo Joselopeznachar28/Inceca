@@ -292,20 +292,11 @@ return [
     'menu' => [
         // Navbar items:
         [
-            'type'         => 'navbar-search',
-            'text'         => 'Buscar',
-            'topnav_right' => true,
-        ],
-        [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
         ],
 
         // Sidebar items:
-        [
-            'type' => 'sidebar-menu-search',
-            'text' => 'Buscar',
-        ],
         ['header'  => 'MODULOS'],
         [
             'text'        => 'Dashboard',
@@ -353,46 +344,23 @@ return [
                 ],
             ],
         ],
-        
-        
-         /*[
-            'text'    => 'Instalaciones',
-            'icon'    => 'fas fa-fw fa-share',
+        [
+            'text' => 'Usuarios',
+            'icon' => 'fas fa-fw fa-lock',
             'submenu' => [
                 [
-                    'text' => 'level_one',
-                    'url'  => '#',
+                    'text'   => 'Registros',
+                    'route'  => 'users.index',
+                    'icon'   => 'fas fa-fw fa-lock',
                 ],
                 [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
+                    'text' => 'Historial',
                     'url'  => '#',
+                    'icon' => 'fas fa-fw fa-lock',
                 ],
             ],
-        ],*/
+        ],
+        
     ],
 
     /*

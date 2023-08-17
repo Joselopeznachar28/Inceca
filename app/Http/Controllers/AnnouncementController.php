@@ -10,9 +10,20 @@ use Illuminate\Support\Str;
 
 class AnnouncementController extends Controller
 {
-    function index(){
-        $announcements = Announcement::all();
-        return view('announcements.index',compact('announcements'));
+    function index(Request $request){
+
+        $search = $request->input('search');
+
+        $announcements = Announcement::when($search, function ($query, $search) {
+            $query->orWhere('name', 'LIKE', '%'.$search.'%')
+            ->orWhere('date', 'LIKE', '%'.$search.'%')
+            ->orWhere('description', 'LIKE', '%'.$search.'%')
+            ->orWhere('code', 'LIKE', '%'.$search.'%');
+        })
+        ->orderBy('id','desc')
+        ->simplePaginate(10);
+
+        return view('announcements.index',compact('announcements','search'));
     }
 
     function create(Project $project){
@@ -29,7 +40,7 @@ class AnnouncementController extends Controller
         $announcement->date = $request->date;
         $announcement->code = strtoupper( Str::random(3));
         $announcement->save();
-
+        notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('announcements.index');
     }
 
@@ -45,7 +56,7 @@ class AnnouncementController extends Controller
             'date' =>  request('date'),
             'project_id' =>  request('project_id'),
         ]);
-
+        notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('announcements.index');
     }
 
@@ -55,6 +66,7 @@ class AnnouncementController extends Controller
 
     function destroy(Announcement $announcement){
         $announcement->delete();
+        notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;
     }
 }

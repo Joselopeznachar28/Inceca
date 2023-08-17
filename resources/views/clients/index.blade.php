@@ -5,7 +5,15 @@
 @section('content_header')
 <div class="d-flex justify-content-between">
     <h1>Clientes</h1>
-    <a href="{{route('clients.create')}}" class="btn btn-outline-success">Añadir</a>
+    @can('clients.create')
+        <a href="{{route('clients.create')}}"><ion-icon name="add-circle" class="submit"></ion-icon></a>
+    @endcan
+    <form action="{{route('clients.index')}}" method="get">
+        <div class="d-flex">
+            <input type="text" name="search" class="form-control" placeholder="Filtrar">
+            <button type="submit"><ion-icon name="search" class="submit form-inline"></ion-icon></button>
+        </div>
+    </form>
 </div>   
 
 @stop
@@ -39,13 +47,19 @@
                     <td>{{$client->phone}}</td>
                     <td>{{$client->email}}</td>
                     <td class="d-flex justify-content-center">
-                        <form action="{{route('clients.destroy', $client)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')">Borrar</button>
-                        </form>
-                        <a href="{{route('clients.edit', $client)}}" class="btn btn-outline-warning">Editar</a>
-                        <a href="{{route('installations.create', $client)}}" class="btn btn-outline-success">Agregar Instalacion</a>
+                        @can('clients.destroy')
+                            <form action="{{route('clients.destroy', $client)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Desea eliminar este Registro?')"><ion-icon name="trash" class="delete"></ion-icon></button>
+                            </form>
+                        @endcan
+                        @can('clients.edit')
+                            <a href="{{route('clients.edit', $client)}}"><ion-icon name="create" class="edit"></ion-icon></a>    
+                        @endcan
+                        @can('installations.create')
+                            <a href="{{route('installations.create', $client)}}"><ion-icon name="business" class="submit"></ion-icon></a>
+                        @endcan
                     </td>
                 </tr>
                 @php
@@ -54,4 +68,5 @@
             @endforeach
         </tbody>
     </table>
+    <span style="text-align: right"><b>{{$clients->links()}}</b></span>
 @endsection

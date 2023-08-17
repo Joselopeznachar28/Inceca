@@ -15,7 +15,7 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->text('description');
             $table->boolean('finish')->default(0);
-            $table->date('date_init');
+            $table->date('date_init')->nullable();
             $table->date('date_finish')->nullable();
             $table->foreignId('administrative_process_id')->constrained('administrative_processes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

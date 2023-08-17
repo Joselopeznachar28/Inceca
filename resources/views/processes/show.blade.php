@@ -12,19 +12,27 @@
 @section('content')
     <!-- Fases -->
     <div>
-        <h2 class="text-uppercase">Fase I - Planificacion</h2>
+        <h2 class="text-uppercase h2">Fase I - Planificacion</h2>
         @if (!$process->planification)
             <p>Fase I - Planificacion, No ha sido creada!</p>
         @else
-            <p class="text-uppercase">{{ 'Fecha de Inicio : ' . $process->planification->date_init }}</p>
-            <p class="text-uppercase">{{ $process->planification->description }}</p>
+            <p class="text-uppercase">Fecha de Inicio : {{ $process->planification->date_init ? $process->planification->date_init : '¡Esta fase aun no ha iniciado!' }}</p>
+            <p class="text-uppercase">{{ 'Descricion de la Fase : ' . $process->planification->description }}</p>
             <div class="d-flex justify-content-between">
                 @if ($process->planification->finish == 0)
-                <div class="form-check form-switch">
-                    <input type="checkbox" data-id="{{$process->planification->id}}" role="switch" class="form-check-input planification" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->planification->finish == True ? 'checked' : ''}}>
-                    <label class="form-check-label">Culminar Fase</label>
-                </div>
-                <a href="{{ route('planifications.edit',$process->planification->id) }}" class="btn btn-outline-warning">Editar</a>
+                    @if (!empty($process->organization))
+                        @can('changeFinishStatusPlanification')
+                            <div class="form-check form-switch">
+                                <input type="checkbox" data-id="{{$process->planification->id}}" role="switch" class="form-check-input planification" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->planification->finish == True ? 'checked' : ''}}>
+                                <label class="form-check-label">Culminar Fase</label>
+                            </div>
+                        @endcan
+                    @else
+                        <span class="text-uppercase">Se debe crear la siguiente fase para poder finalizar esta!</span>
+                    @endif
+                    @can('planifications.edit')
+                        <a href="{{ route('planifications.edit',$process->planification->id) }}" ><ion-icon     name="create" class="edit"></ion-icon></a>
+                    @endcan
                 @else
                     <span>Esta fase ha culminado!</span>
                 @endif
@@ -32,19 +40,27 @@
         @endif
     </div><hr>
     <div>
-        <h2 class="text-uppercase">Fase II - Organizacion</h2>
+        <h2 class="text-uppercase h2">Fase II - Organizacion</h2>
         @if (!$process->organization)
             <p>Fase II - Organizacion, No ha sido creada!</p>
         @else
-            <p class="text-uppercase">{{ 'Fecha de Inicio : ' . $process->organization->date_init }}</p>
-            <p class="text-uppercase">{{ $process->organization->description }}</p>
+            <p class="text-uppercase">Fecha de Inicio : {{$process->organization->date_init ? $process->organization->date_init : '¡Esta fase aun no ha iniciado!' }}</p>
+            <p class="text-uppercase">{{'Descripcion de la Fase : ' . $process->organization->description }}</p>
             <div class="d-flex justify-content-between">
                 @if ($process->organization->finish == 0)
-                <div class="form-check form-switch">
-                    <input type="checkbox" role="switch" data-id="{{$process->organization->id}} "class="form-check-input organization" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->organization->finish == True ? 'checked' : ''}}>
-                    <label class="form-check-label">Culminar Fase</label>
-                </div>
-                <a href="{{ route('organizations.edit',$process->organization->id) }}" class="btn btn-outline-warning">Editar</a>
+                    @if (!empty($process->direction))
+                        @can('changeFinishStatusOrganization')
+                            <div class="form-check form-switch">
+                                <input type="checkbox" role="switch" data-id="{{$process->organization->id}} "class="form-check-input organization" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->organization->finish == True ? 'checked' : ''}}>
+                                <label class="form-check-label">Culminar Fase</label>
+                            </div>
+                        @endcan
+                    @else
+                        <span class="text-uppercase">Se debe crear la siguiente fase para poder finalizar esta!</span>  
+                    @endif
+                    @can('organizations.edit')
+                        <a href="{{ route('organizations.edit',$process->organization->id) }}"><ion-icon name="create" class="edit"></ion-icon></a>
+                    @endcan
                 @else
                     <span>Esta fase ha culminado!</span>
                 @endif
@@ -52,19 +68,27 @@
         @endif
     </div><hr>
     <div>
-        <h2 class="text-uppercase">Fase III - Direccion</h2>
+        <h2 class="text-uppercase h2">Fase III - Direccion</h2>
         @if (!$process->direction)
             <p>Fase III - Direccion, No ha sido creada!</p>
         @else
-            <p class="text-uppercase">{{ 'Fecha de Inicio : ' . $process->direction->date_init }}</p>
-            <p class="text-uppercase">{{ $process->direction->description }}</p>
+            <p class="text-uppercase">Fecha de Inicio : {{$process->direction->date_init ? $process->direction->date_init : '¡Esta fase aun no ha iniciado!' }}</p>
+            <p class="text-uppercase">{{ 'Descricion de la Fase : ' . $process->direction->description }}</p>
             <div class="d-flex justify-content-between">
                 @if ($process->direction->finish == 0)
-                <div class="form-check form-switch">
-                    <input type="checkbox" data-id="{{$process->direction->id}}" role="switch" class="form-check-input direction" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->direction->finish == True ? 'checked' : ''}}>
-                    <label class="form-check-label">Culminar Fase</label>
-                </div>
-                    <a href="{{ route('directions.edit',$process->direction->id) }}" class="btn btn-outline-warning">Editar</a>
+                    @if (!empty($process->control))
+                        @can('changeFinishStatusDirection')
+                            <div class="form-check form-switch">
+                                <input type="checkbox" data-id="{{$process->direction->id}}" role="switch" class="form-check-input direction" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->direction->finish == True ? 'checked' : ''}}>
+                                <label class="form-check-label">Culminar Fase</label>
+                            </div>
+                        @endcan
+                    @else
+                        <span class="text-uppercase">Se debe crear la siguiente fase para poder finalizar esta!</span>  
+                    @endif
+                    @can('directions.edit')
+                        <a href="{{ route('directions.edit',$process->direction->id) }}"><ion-icon name="create" class="edit"></ion-icon></a>
+                    @endcan
                 @else
                     <span>Esta fase ha culminado!</span>
                 @endif
@@ -72,19 +96,23 @@
         @endif
     </div><hr>
     <div>
-        <h2 class="text-uppercase">Fase IV - Control</h2>
+        <h2 class="text-uppercase h2">Fase IV - Control</h2>
         @if (!$process->control)
             <p>Fase IV - Control, No ha sido creada!</p>
         @else
-            <p class="text-uppercase">{{ 'Fecha de Inicio : ' . $process->control->date_init }}</p>
-            <p class="text-uppercase">{{ $process->control->description }}</p>
+            <p class="text-uppercase">Fecha de Inicio : {{$process->control->date_init ? $process->control->date_init : '¡Esta fase aun no ha iniciado!' }}</p>
+            <p class="text-uppercase">{{ 'Descricion de la Fase : ' . $process->control->description }}</p>
             <div class="d-flex justify-content-between">
                 @if ($process->control->finish == 0)
-                <div class="form-check form-switch">
-                    <input type="checkbox" role="switch" data-id="{{$process->control->id}}" class="form-check-input control" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->control->finish == True ? 'checked' : ''}}>
-                    <label class="form-check-label">Culminar Fase</label>
-                </div>
-                    <a href="{{ route('controls.edit',$process->control->id) }}" class="btn btn-outline-warning">Editar</a>
+                    @can('changeFinishStatusControl')
+                        <div class="form-check form-switch">
+                            <input type="checkbox" role="switch" data-id="{{$process->control->id}}" class="form-check-input control" data-toggle="toggle" data-on="Enviado" data-off="Enviar" data-style="slow" {{$process->control->finish == True ? 'checked' : ''}}>
+                            <label class="form-check-label">Culminar Fase</label>
+                        </div>
+                    @endcan
+                    @can('controls.edit')
+                        <a href="{{ route('controls.edit',$process->control->id) }}"><ion-icon name="create" class="edit"></ion-icon></a>
+                    @endcan
                 @else
                     <span>Esta fase ha culminado!</span>
                 @endif
@@ -93,7 +121,7 @@
     </div><hr>
     <div class="row">
         <div class="col-sm-3">
-            <a type="button" href="{{ route('processes.index') }}" class="btn btn-info">Regresar</a>
+            <a type="button" href="{{ route('processes.index') }}"><ion-icon name="arrow-round-back" class="info"></ion-icon></a>
         </div>
     </div><br>
     @section('adminlte_js')

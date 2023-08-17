@@ -97,7 +97,7 @@
         </div>
         <div class="row">
             <div class="col-sm-3">
-                <button type="submit" class="btn btn-success" onclick="return confirm('Desea actualizar los datos?')">Actualizar</button>
+                <button type="submit" onclick="return confirm('Desea actualizar los datos?')"><ion-icon name="checkmark-circle" class="submit"></ion-icon></button>
             </div>
         </div>
     </form>

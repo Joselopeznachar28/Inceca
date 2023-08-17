@@ -9,9 +9,16 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-    function index(){
-        $categories = Category::all();
-        return view('categories.index',compact('categories'));
+    function index(Request $request){
+
+        $search = $request->input('search');
+
+        $categories = Category::when($search, function ($query, $search) {
+            $query->orWhere('name', 'LIKE', '%'.$search.'%');
+        })
+        ->orderBy('id','desc')
+        ->simplePaginate(10);
+        return view('categories.index',compact('categories','search'));
     }
 
     function create(){
@@ -25,6 +32,7 @@ class CategoryController extends Controller
         $categorie->name = $request->name;
         $categorie->code = strtoupper( Str::random(3));
         $categorie->save();
+        notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
 
         return redirect()->route('categories.index');
     }
@@ -39,11 +47,15 @@ class CategoryController extends Controller
             'name' =>  request('name'),
         ]);
 
+        notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
+
         return redirect()->route('categories.index');
     }
 
     function destroy(Category $category){
         $category->delete();
+        notify()->success('¡El registro ha sido eliminado exitosamente!','¡Proceso Exitoso!');
+
         return back() ;
     }
 }

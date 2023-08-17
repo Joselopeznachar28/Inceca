@@ -1,3 +1,37 @@
 .m-b-s-a{
     margin-block-start: auto !important;
 }
+
+.d-grid{
+    display: grid;
+}
+
+.grid-template-columns-2{
+    grid-template-columns : repeat( 2, 1fr);
+}
+.grid-template-columns-4{
+    grid-template-columns : repeat( 4, 1fr);
+}
+
+.submit{
+    font-size: 2rem;
+    color: green;
+}
+
+.edit{
+    font-size: 2rem;
+    color: orange; 
+}
+
+button{
+    border-style: none !important;
+    background-color: transparent !important;
+}
+.delete{
+    font-size: 2rem;
+    color: red;
+}
+.info{
+    font-size: 2rem;
+    color: steelblue;
+}

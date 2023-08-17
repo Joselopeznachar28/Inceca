@@ -8,9 +8,25 @@ use App\Models\Client;
 use Illuminate\Http\Request;
 class ClientController extends Controller
 {
-    function index(){
-        $clients = Client::all();
-        return view('clients.index',compact('clients'));
+    function index(Request $request){
+
+        $search = $request->input('search');
+
+        $clients = Client::when($search, function ($query, $search) {
+            $query->orWhere('name', 'LIKE', '%'.$search.'%')
+            ->orWhere('company', 'LIKE', '%'.$search.'%')
+            ->orWhere('identification', 'LIKE', '%'.$search.'%')
+            ->orWhere('address', 'LIKE', '%'.$search.'%')
+            ->orWhere('phone', 'LIKE', '%'.$search.'%')
+            ->orWhere('email', 'LIKE', '%'.$search.'%')
+            ->orWhere('country', 'LIKE', '%'.$search.'%')
+            ->orWhere('city', 'LIKE', '%'.$search.'%')
+            ->orWhere('state', 'LIKE', '%'.$search.'%');
+        })
+        ->orderBy('id','desc')
+        ->simplePaginate(10);
+
+        return view('clients.index',compact('clients','search'));
     }
 
     function create(){
@@ -33,7 +49,7 @@ class ClientController extends Controller
         $client->city = $request->city;
         $client->address = $request->address;
         $client->save();
-
+        notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('clients.index');
     }
 
@@ -56,12 +72,13 @@ class ClientController extends Controller
             'city' =>  request('city'),
             'address' =>  request('address'),
         ]);
-
+        notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('clients.index');
     }
 
     function destroy(Client $client){
         $client->delete();
+        notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;
     }
 }

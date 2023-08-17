@@ -5,6 +5,12 @@
 @section('content_header')
 <div class="d-flex justify-content-between">
     <h1>Instalaciones</h1>
+    <form action="{{route('installations.index')}}" method="get">
+        <div class="d-flex">
+            <input type="text" name="search" class="form-control" placeholder="Filtrar">
+            <button type="submit"><ion-icon name="search" class="submit form-inline"></ion-icon></button>
+        </div>
+    </form>
 </div>   
 
 @stop
@@ -34,13 +40,19 @@
                     <td>{{$installation->client->name . ' / ' . $installation->client->company}}</td>
                     <td>{{$installation->area->name}}</td>
                     <td class="d-flex justify-content-center">
-                        <form action="{{route('installations.destroy', $installation)}}" method="post">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')">Borrar</button>
-                        </form>
-                        <a href="{{route('installations.edit', $installation)}}" class="btn btn-outline-warning">Editar</a>
-                        <a href="{{route('projects.create', $installation)}}" class="btn btn-outline-success">Agregar Proyectos</a>
+                        @can('installations.destroy')
+                            <form action="{{route('installations.destroy', $installation)}}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Desea eliminar este Registro?')"><ion-icon name="trash" class="delete"></ion-icon></button>
+                            </form>
+                        @endcan
+                        @can('installations.edit')
+                            <a href="{{route('installations.edit', $installation)}}"><ion-icon name="create"    class="edit"></ion-icon></a>
+                        @endcan
+                        @can('projects.create')
+                            <a href="{{route('projects.create', $installation)}}"><ion-icon name="logo-buffer" class="submit"></ion-icon></a>
+                        @endcan
                     </td>
                 </tr>
                 @php
@@ -49,4 +61,5 @@
             @endforeach
         </tbody>
     </table>
+    <span style="text-align: right"><b>{{$installations->links()}}</b></span>
 @endsection

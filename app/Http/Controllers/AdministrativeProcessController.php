@@ -9,9 +9,17 @@ use Illuminate\Support\Str;
 
 class AdministrativeProcessController extends Controller
 {
-    function index(){
-        $processes = AdministrativeProcess::all();
-        return view('processes.index',compact('processes'));
+    function index(Request $request){
+
+        $search = $request->input('search');
+
+        $processes = AdministrativeProcess::when($search, function ($query, $search) {
+            $query->orWhere('code', 'LIKE', '%'.$search.'%');
+        })
+        ->orderBy('id','desc')
+        ->simplePaginate(10);
+
+        return view('processes.index',compact('processes','search'));
     }
 
     /*function create(Project $project){

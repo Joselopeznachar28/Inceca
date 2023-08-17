@@ -5,7 +5,15 @@
 @section('content_header')
 <div class="d-flex justify-content-between">
     <h1>Areas</h1>
-    <a href="{{route('areas.create')}}" class="btn btn-outline-success">Añadir</a>
+    @can('areas.create')
+        <a href="{{route('areas.create')}}"><ion-icon name="add-circle" class="submit"></ion-icon></a>
+    @endcan
+    <form action="{{route('areas.index')}}" method="get">
+        <div class="d-flex">
+            <input type="text" name="search" class="form-control" placeholder="Filtrar">
+            <button type="submit"><ion-icon name="search" class="submit form-inline"></ion-icon></button>
+        </div>
+    </form>
 </div>   
 
 @stop
@@ -37,13 +45,16 @@
                     <td>{{$area->city}}</td>
                     <td>{{$area->address}}</td>
                     <td class="d-flex justify-content-center">
-                        <form action="{{route('areas.destroy', $area)}}" method="post">
+                        @can('areas.destroy')
+                            <form action="{{route('areas.destroy', $area)}}" method="post">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')">Borrar</button>
-                        </form>
-                        <a href="{{route('areas.edit', $area)}}" class="btn btn-outline-warning">Editar</a>
-                        {{-- <a href="{{route('ports.create', $categorie->id)}}" class="btn btn-outline-success">Add Ports</a> --}}
+                            <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Desea eliminar este Registro?')"><ion-icon name="trash" class="delete"></ion-icon></button>
+                            </form>
+                        @endcan
+                        @can('areas.edit')
+                            <a href="{{route('areas.edit', $area)}}"><ion-icon name="create" class="edit"></ion-icon></a>
+                        @endcan
                     </td>
                 </tr>
                 @php
@@ -52,4 +63,5 @@
             @endforeach
         </tbody>
     </table>
+    <span style="text-align: right"><b>{{$areas->links()}}</b></span>
 @endsection

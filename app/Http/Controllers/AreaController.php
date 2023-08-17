@@ -9,9 +9,21 @@ use Illuminate\Support\Str;
 
 class AreaController extends Controller
 {
-    function index(){
-        $areas = Area::all();
-        return view('areas.index',compact('areas'));
+    function index(Request $request){
+
+        $search = $request->input('search');
+
+        $areas = Area::when($search, function ($query, $search) {
+            $query->orWhere('name', 'LIKE', '%'.$search.'%')
+            ->orWhere('state', 'LIKE', '%'.$search.'%')
+            ->orWhere('city', 'LIKE', '%'.$search.'%')
+            ->orWhere('address', 'LIKE', '%'.$search.'%')
+            ->orWhere('code', 'LIKE', '%'.$search.'%');
+        })
+        ->orderBy('id','desc')
+        ->simplePaginate(10);
+
+        return view('areas.index',compact('areas','search'));
     }
 
     function create(){
@@ -28,7 +40,7 @@ class AreaController extends Controller
         $area->address = $request->address;
         $area->code = strtoupper( Str::random(3));
         $area->save();
-
+        notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('areas.index');
     }
 
@@ -45,11 +57,14 @@ class AreaController extends Controller
             'address' =>  request('address'),
         ]);
 
+        notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('areas.index');
     }
 
     function destroy(Area $area){
+        
         $area->delete();
+        notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;
     }
 }

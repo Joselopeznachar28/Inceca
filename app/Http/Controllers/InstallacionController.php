@@ -12,9 +12,19 @@ use Illuminate\Support\Str;
 class InstallacionController extends Controller
 {
 
-    function index(){
-        $installations = Installacion::all();
-        return view('installations.index',compact('installations'));
+    function index(Request $request){
+
+        $search = $request->input('search');
+
+        $installations = Installacion::when($search, function ($query, $search) {
+            $query->orWhere('name', 'LIKE', '%'.$search.'%')
+            ->orWhere('code', 'LIKE', '%'.$search.'%')
+            ->orWhere('description', 'LIKE', '%'.$search.'%');
+        })
+        ->orderBy('id','desc')
+        ->simplePaginate(10);
+        
+        return view('installations.index',compact('installations','search'));
     }
 
     function create(Client $client){
@@ -32,7 +42,7 @@ class InstallacionController extends Controller
         $installation->client_id = $request->client_id;
         $installation->code = strtoupper( Str::random(3));
         $installation->save();
-
+        notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('installations.index');
     }
 
@@ -49,12 +59,14 @@ class InstallacionController extends Controller
             'area_id' =>  request('area_id'),
             'client_id' =>  request('client_id'),
         ]);
-
+        notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('installations.index');
     }
 
     function destroy(Installacion $installation){
         $installation->delete();
+
+        notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;
     }
 }

@@ -19,7 +19,7 @@
                     @enderror
                 </div>
                 <div class="col-sm-3  m-b-s-a">
-                    <button type="submit" class="btn btn-success" onclick="return confirm('Desea guardar estos datos?')">Guardar</button>
+                    <button type="submit" onclick="return confirm('Desea guardar estos datos?')"><ion-icon name="checkmark-circle" class="submit"></ion-icon></button>
                 </div>
             </div>
         </div>

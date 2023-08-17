@@ -12,9 +12,10 @@
         @method('PUT')
         <div class="form-group">
             <div class="row">
+                <input type="hidden" name="project_id" id="project_id" value="{{$announcement->project_id}}">
                 <div class="col-sm-4">
                     <label for="project_id" class="form-label">Proyecto</label>
-                    <input type="text" name="project_id" id="project_id" class="form-control" readonly placeholder='{{ $announcement->project_id }}' autocomplete="project_id" value="{{$announcement->project_id}}">
+                    <input type="text" class="form-control" readonly disabled value="{{$announcement->project->name}}">
                 </div>
                 <div class="col-sm-4">
                     <label for="name" class="form-label">Aviso - Nombre Indicativo</label>
@@ -42,7 +43,7 @@
             </div><br>
             <div class="row">
                 <div class="col-sm-3">
-                    <button type="submit" class="btn btn-success" onclick="return confirm('Desea actualizar estos datos?')">Actualizar</button>
+                    <button type="submit" onclick="return confirm('Desea actualizar estos datos?')"><ion-icon name="checkmark-circle" class="submit"></ion-icon></button>
                 </div>
             </div>
         </div>

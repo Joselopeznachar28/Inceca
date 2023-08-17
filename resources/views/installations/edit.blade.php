@@ -11,10 +11,11 @@
         @csrf
         @method('PUT')
         <div class="form-group">
+            <input type="hidden" name="client_id" id="client_id" class="form-control" value="{{$installation->client_id}}">
             <div class="row">
                 <div class="col-sm-4">
                     <label for="client_id" class="form-label">Empresa</label>
-                    <input type="text" name="client_id" id="client_id" class="form-control" readonly placeholder='{{ $installation->client->name }}' autocomplete="client_id" value="{{$installation->client_id}}">
+                    <input type="text" class="form-control" readonly disabled value="{{$installation->client->company}}">
                     @error('client_id')
                         <span style="color: red;"> • {{ $message }} </span><br/>
                     @enderror
@@ -50,7 +51,7 @@
             </div><br>
             <div class="row">
                 <div class="col-sm-3">
-                    <button type="submit" class="btn btn-success" onclick="return confirm('Desea actualizar estos datos?')">Actualizar</button>
+                    <button type="submit" onclick="return confirm('Desea actualizar estos datos?')"><ion-icon name="checkmark-circle" class="submit"></ion-icon></button>
                 </div>
             </div>
         </div>

@@ -13,7 +13,7 @@
     <h4> Fecha : {{ $announcement->date }}</h4>
     <div class="row">
         <div class="col-sm-3">
-            <a type="button" href="{{ route('announcements.index') }}" class="btn btn-info">Regresar</a>
+            <a type="button" href="{{ route('announcements.index') }}"><ion-icon name="arrow-round-back" class="info"></ion-icon></a>
         </div>
     </div>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProcessRequest;
 use App\Models\AdministrativeProcess;
 use App\Models\Direction;
 use Illuminate\Http\Request;
@@ -13,12 +14,12 @@ class DirectionController extends Controller
         return view('processes.direction.create', compact('process'));
     }
 
-    function store(Request $request){
+    function store(ProcessRequest $request){
         $process = Direction::create([
             'administrative_process_id' => $request->administrative_process_id,
-            'date_init' => $request->date_init,
             'description' => $request->description,
         ]);
+        notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
 
         return redirect()->route('processes.index');
     }
@@ -28,12 +29,12 @@ class DirectionController extends Controller
         return view('processes.direction.edit',compact('direction'));
     }
 
-    function update(Request $request, $id){
+    function update(ProcessRequest $request, $id){
         $direction = Direction::findOrFail($id)->update([
             'administrative_process_id' => $request->administrative_process_id,
-            'date_init' => $request->date_init,
             'description' => $request->description,
         ]);
+        notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
 
         return redirect()->route('processes.index');
     }
@@ -41,7 +42,23 @@ class DirectionController extends Controller
     public function changeFinishStatus(Request $request){
         $direction = Direction::find($request->direction_id);
         $direction->finish = $request->finish;
+
+        $date_finish = now();
+        $direction->date_finish = $date_finish;
+
+        $process = AdministrativeProcess::find($direction->administrative_process_id);
+        $control = $process->control;
+
+        $control->update([
+            'date_init' => $date_finish
+        ]);
+
+        $control->fresh();
+
         $direction->save();
+
+        notify()->success('¡La fase de direccion fue finalizada!','¡Proceso Exitoso!');
+        
         return response()->json(['Aprobado' => 'La fase de direccion fue finalizada!']);
     }
 }

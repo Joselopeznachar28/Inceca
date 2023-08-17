@@ -15,15 +15,18 @@ class UsersTableSeeder extends Seeder
     public function run(): void
     {
         $user = User::create([
-            'name' => 'Jose',
-            'lastname' => 'Lopez',
-            'identification' => '25431129',
-            'email' => 'joselopeznachar28@gmail.com',
-            'code' => 'Adm28',
-            'username' => 'Admin',
+            'name' => 'System',
+            'lastname' => 'Admin',
+            'identification' => '12345678',
+            'email' => 'admin@admin.com',
+            'code' => 'SysAdm',
+            'username' => 'Administrador',
             'password' => Hash::make(12345678),
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        $user->update(['password' => Hash::make(12345678)]);
+        $user->assignRole(['Administrador']);
     }
 }

@@ -10,10 +10,11 @@
     <form action="{{route('projects.store')}}" method="post">
         @csrf
         <div class="form-group">
+            <input type="hidden" name="installation_id" id="installation_id" value="{{$installation->id}}">
             <div class="row">
                 <div class="col-sm-6">
                     <label for="installation_id" class="form-label">Instalacion</label>
-                    <input type="text" name="installation_id" id="installation_id" class="form-control" readonly placeholder='{{ $installation->name }}' autocomplete="installation_id" value="{{$installation->id}}">
+                    <input type="text" class="form-control" readonly disabled value="{{$installation->name}}">
                     @error('installation_id')
                         <span style="color: red;"> • {{ $message }} </span><br/>
                     @enderror
@@ -37,7 +38,7 @@
             </div><br>
             <div class="row">
                 <div class="col-sm-3">
-                    <button type="submit" class="btn btn-success" onclick="return confirm('Desea guardar estos datos?')">Guardar</button>
+                    <button type="submit" onclick="return confirm('Desea guardar estos datos?')"><ion-icon name="checkmark-circle" class="submit"></ion-icon></button>
                 </div>
             </div>
         </div>

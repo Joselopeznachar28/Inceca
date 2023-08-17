@@ -11,6 +11,7 @@ use App\Http\Controllers\InstallacionController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\PlanificationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -71,7 +72,7 @@ Route::get('Crear/Proyecto/Instalacion/{installation:name}', [ProjectController:
 Route::post('Proyecto', [ProjectController::class, 'store'])->name('projects.store');
 Route::get('Editar/Proyecto/{project:name}', [ProjectController::class, 'edit'])->name('projects.edit');
 Route::put('Editar/Proyecto/{project:name}', [ProjectController::class, 'update'])->name('projects.update');
-Route::get('Detalles/Proyecto/{project:name}', [ProjectController::class, 'show'])->name('projects.show');
+Route::get('Pdf/Proyecto/{project:name}', [ProjectController::class, 'pdf'])->name('projects.pdf');
 Route::delete('Proyecto/{project:name}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
 //announcement
@@ -90,7 +91,7 @@ Route::post('Proceso/Administrativo', [AdministrativeProcessController::class, '
 // Route::get('Editar/Proceso/Administrativo/{process:name}', [AdministrativeProcessController::class, 'edit'])->name('processes.edit');
 // Route::put('Editar/Proceso/Administrativo/{process:name}', [AdministrativeProcessController::class, 'update'])->name('processes.update');
 Route::get('Detalles/Proceso/Administrativo/{id}', [AdministrativeProcessController::class, 'show'])->name('processes.show');
-// Route::delete('Proceso/Administrativo/{process:name}', [AdministrativeProcessController::class, 'destroy'])->name('processes.destroy');
+Route::delete('Proceso/Administrativo/{process:name}', [AdministrativeProcessController::class, 'destroy'])->name('processes.destroy');
 
 //Planification
 Route::get('Crear/Planificacion/FaseI/Proceso/{id}', [PlanificationController::class, 'create'])->name('planifications.create');
@@ -119,3 +120,12 @@ Route::post('Control', [ControlController::class, 'store'])->name('controls.stor
 Route::get('Editar/Control/{id}', [ControlController::class, 'edit'])->name('controls.edit');
 Route::put('Editar/Control/{id}', [ControlController::class, 'update'])->name('controls.update');
 Route::get('FaseIV/Finalizada', [ControlController::class, 'changeFinishStatus'])->name('changeFinishStatusControl');
+
+//Users
+Route::get('Usuarios', [UserController::class, 'index'])->name('users.index');
+Route::get('Crear/Usuario', [UserController::class, 'create'])->name('users.create');
+Route::post('Crear/Usuario', [UserController::class, 'store'])->name('users.store');
+Route::get('Editar/Usuario/{user:name}', [UserController::class, 'edit'])->name('users.edit');
+Route::put('Editar/Usuario/{user:name}', [UserController::class, 'update'])->name('users.update');
+Route::get('Detalles/Usuario/{user:name}', [UserController::class, 'show'])->name('users.show');
+Route::delete('Usuario/{user:name}', [UserController::class, 'destroy'])->name('users.destroy');

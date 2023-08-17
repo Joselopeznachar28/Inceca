@@ -19,14 +19,14 @@
                         <span style="color: red;"> • {{ $message }} </span><br/>
                     @enderror
                 </div>
-            </div>
+            </div><br>
             <div class="row">
                 <div class="col-sm-6">
                     <label for="date_init" class="form-label">Fecha de Inicio</label>
-                    <input type="date" name="date_init" id="date_init" class="form-control">
+                    <input type="date" name="date_init" id="date_init" class="form-control" required>
                 </div>
                 <div class="col-sm-3 m-b-s-a">
-                    <button type="submit" class="btn btn-success" onclick="return confirm('Desea guardar estos datos?')">Guardar</button>
+                    <button type="submit" onclick="return confirm('Desea guardar estos datos?')"><ion-icon name="checkmark-circle" class="submit"></ion-icon></button>
                 </div>
             </div>
         </div>

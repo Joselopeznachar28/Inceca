@@ -27,7 +27,7 @@ class ClientRequest extends FormRequest
             'city' => 'min:5|max:50|required',
             'address' => 'min:5|required',
             'company' => 'required',
-            'identification' => 'min:9|required|numeric',
+            'identification' => 'required|digits_between:9,9',
             'phone' => 'required|numeric|min:11',
             'email' => 'required|email',
             'country' => 'min:5|max:50|required',
@@ -56,9 +56,8 @@ class ClientRequest extends FormRequest
             'address.required' => 'Este campo es requerido',
             'address.min' => 'Este campo debe contener almenos 5 digitos',
 
-            'identification.min' => 'Este campo debe contener almenos 9 digitos',
             'identification.required' => 'Este campo es requerido',
-            'identification.numeric' => 'Este campo es de tipo numerico',
+            'identification.digits_between' => 'Este campo debe tener 9 digitos de tipo numerico',
 
             'phone.numeric' => 'Este campo es de tipo numerico',
             'phone.min' => 'Este campo debe contener almenos 11 digitos',
