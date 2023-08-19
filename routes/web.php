@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivyController;
 use App\Http\Controllers\AdministrativeProcessController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\AreaController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\PlanificationController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Spatie\Activitylog\Models\Activity;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,3 +131,6 @@ Route::get('Editar/Usuario/{user:name}', [UserController::class, 'edit'])->name(
 Route::put('Editar/Usuario/{user:name}', [UserController::class, 'update'])->name('users.update');
 Route::get('Detalles/Usuario/{user:name}', [UserController::class, 'show'])->name('users.show');
 Route::delete('Usuario/{user:name}', [UserController::class, 'destroy'])->name('users.destroy');
+
+//Activity
+Route::get('Historial', [ActivyController::class, 'index'])->name('activities.index');

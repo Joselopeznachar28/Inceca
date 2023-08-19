@@ -6,8 +6,10 @@ use App\Http\Requests\ProjectRequest;
 use App\Models\Installacion;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use PDF;
+use Spatie\Activitylog\Models\Activity;
 
 class ProjectController extends Controller
 {
@@ -39,6 +41,13 @@ class ProjectController extends Controller
         $project->description = $request->description;
         $project->code = strtoupper( Str::random(3));
         $project->save();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se creo el Proyecto : ' . $project->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('projects.index');
     }
@@ -50,11 +59,18 @@ class ProjectController extends Controller
 
     function update(ProjectRequest $request, Project $project){
         
-        $project = Project::findOrFail($project->id)->update([
+        $newProject = Project::findOrFail($project->id)->update([
             'name' =>  request('name'),
             'description' =>  request('description'),
             'installation_id' =>  request('installation_id'),
         ]);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se actualizo el Proyecto : ' . $project->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('projects.index');
     }
@@ -67,7 +83,15 @@ class ProjectController extends Controller
     }
 
     function destroy(Project $project){
+
         $project->delete();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se elimino el Proyecto : ' . $project->name;
+        $activity->save();
+
         notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;
     }

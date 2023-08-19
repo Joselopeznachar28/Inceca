@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProcessRequest;
 use App\Models\AdministrativeProcess;
 use App\Models\Control;
+use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 
 class ControlController extends Controller
 {
@@ -15,10 +18,21 @@ class ControlController extends Controller
     }
 
     function store(ProcessRequest $request){
-        $process = Control::create([
+
+        $control = Control::create([
             'administrative_process_id' => $request->administrative_process_id,
             'description' => $request->description,
         ]);
+
+        $process = AdministrativeProcess::find($control->administrative_process_id);
+        $project = Project::find($process->project_id);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se creo la fase de control del proyecto : ' . $project->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('processes.index');
     }
@@ -29,10 +43,23 @@ class ControlController extends Controller
     }
 
     function update(ProcessRequest $request, $id){
-        $control = Control::findOrFail($id)->update([
+
+        $control = Control::find($id);
+
+        $newControl = $control->update([
             'administrative_process_id' => $request->administrative_process_id,
             'description' => $request->description,
         ]);
+
+        $process = AdministrativeProcess::find($control->administrative_process_id);
+        $project = Project::find($process->project_id);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se actualizo la fase de control del proyecto : ' . $project->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
 
         return redirect()->route('processes.index');
@@ -44,6 +71,15 @@ class ControlController extends Controller
 
         $date_finish = now();
         $control->date_finish = $date_finish;
+
+        $process = AdministrativeProcess::find($control->administrative_process_id);
+        $project = Project::find($process->project_id);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se finalizo la fase de control del proyecto : ' . $project->name;
+        $activity->save();
 
         $control->save();
 

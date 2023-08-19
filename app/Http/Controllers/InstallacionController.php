@@ -7,7 +7,9 @@ use App\Models\Area;
 use App\Models\Client;
 use App\Models\Installacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Activity;
 
 class InstallacionController extends Controller
 {
@@ -42,6 +44,13 @@ class InstallacionController extends Controller
         $installation->client_id = $request->client_id;
         $installation->code = strtoupper( Str::random(3));
         $installation->save();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se creó la Instalacion : ' . $installation->name;
+        $activity->save();
+        
         notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('installations.index');
     }
@@ -53,18 +62,32 @@ class InstallacionController extends Controller
 
     function update(InstallationRequest $request, Installacion $installation){
         
-        $installation = Installacion::findOrFail($installation->id)->update([
+        $newInstallation = Installacion::findOrFail($installation->id)->update([
             'name' =>  request('name'),
             'description' =>  request('description'),
             'area_id' =>  request('area_id'),
             'client_id' =>  request('client_id'),
         ]);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se actualizo la Instalacion : ' . $installation->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('installations.index');
     }
 
     function destroy(Installacion $installation){
+
         $installation->delete();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se elimino la Instalacion : ' . $installation->name;
+        $activity->save();
 
         notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;

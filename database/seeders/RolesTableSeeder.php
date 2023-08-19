@@ -37,6 +37,11 @@ class RolesTableSeeder extends Seeder
             'description' => 'Ver Dashboard',
         ])->syncRoles([$admin,$superuser,$responsable,$visualizador]);
 
+        $activitiesIndex = Permission::create([
+            'name' => 'activities.index',
+            'description' => 'Ver Historial de Actividades',
+        ])->syncRoles([$admin]);
+
         $usersIndex = Permission::create([
             'name' => 'users.index',
             'description' => 'Ver Lista de Usuario'

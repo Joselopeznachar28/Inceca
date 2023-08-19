@@ -49,7 +49,7 @@
                             <a href="{{route('projects.edit', $project)}}"><ion-icon name="create" class="edit"></ion-icon></a>
                         @endcan
                         @can('projects.pdf')
-                            <a href="{{route('projects.pdf', $project)}}"><ion-icon name="paper" class="info"></ion-icon></a>
+                            <a href="{{route('projects.pdf', $project)}}"><ion-icon name="list-box" class="info"></ion-icon></a>
                         @endcan
                         @can('announcements.create')
                             <a href="{{route('announcements.create', $project)}}"><ion-icon name="warning" class="submit"></ion-icon></a>

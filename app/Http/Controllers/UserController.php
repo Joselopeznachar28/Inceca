@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Activity;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -35,6 +37,7 @@ class UserController extends Controller
 
     function store(UserRequest $request){
 
+        
         $user = User::create([
             'name' => $request->name,
             'lastname' => $request->lastname,
@@ -44,14 +47,21 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
             'code' => strtoupper( Str::random(3)),
         ]);
-
+        
         $roles = $request->role_id;
-
+        
         if (!empty($roles)) {
             $user->roles()->sync($roles);
         }
+        
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se creó el Usuario : ' . $user->name . ' ' . $user->lastname;
+        $activity->save();
 
         notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
+
         return redirect()->route('users.index');
     }
 
@@ -61,8 +71,10 @@ class UserController extends Controller
     }
 
     function update(UserRequest $request, User $user){
-        $user = User::find($user->id);
-        $user->update([
+
+        $oldUser = User::find($user->id);
+
+        $newUser = $user->update([
             'name' => $request->name,
             'lastname' => $request->lastname,
             'username' => $request->username,
@@ -77,16 +89,39 @@ class UserController extends Controller
             $user->roles()->sync($roles);
         }
 
+        // $prueba = [
+        //     'oldUser' => $oldUser,
+        //     'newUser' => User::find($user->id)
+        // ];
+
+        // dd($prueba);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se Actualizaron los datos del usuario : ' . $oldUser->name . ' ' . $oldUser->lastname;
+        $activity->save();
+
         notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('users.index');
     }
 
     function show(User $user){
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Observo los detalles del usuario : ' . $user->name . ' ' . $user->lastname;
+        $activity->save();
         return view('users.show',compact('user'));
     }
 
     function destroy(User $user){
         $user->delete();
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se Elimino el usuario : ' . $user->name . ' ' . $user->lastname;
+        $activity->save();
         notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;
     }

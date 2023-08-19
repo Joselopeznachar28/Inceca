@@ -6,6 +6,8 @@ use App\Http\Requests\ClientRequest;
 use App\Models\Category;
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Spatie\Activitylog\Models\Activity;
 class ClientController extends Controller
 {
     function index(Request $request){
@@ -49,6 +51,13 @@ class ClientController extends Controller
         $client->city = $request->city;
         $client->address = $request->address;
         $client->save();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se creó el Cliente : ' . $client->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('clients.index');
     }
@@ -72,12 +81,27 @@ class ClientController extends Controller
             'city' =>  request('city'),
             'address' =>  request('address'),
         ]);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se actualizo el Cliente : ' . $client->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('clients.index');
     }
 
     function destroy(Client $client){
+
         $client->delete();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se elimino el Cliente : ' . $client->name;
+        $activity->save();
+
         notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
         return back() ;
     }

@@ -6,7 +6,9 @@ use App\Http\Requests\AnnouncementRequest;
 use App\Models\Announcement;
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Spatie\Activitylog\Models\Activity;
 
 class AnnouncementController extends Controller
 {
@@ -40,6 +42,13 @@ class AnnouncementController extends Controller
         $announcement->date = $request->date;
         $announcement->code = strtoupper( Str::random(3));
         $announcement->save();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se creo el anuncio : ' . $announcement->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha guardado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('announcements.index');
     }
@@ -50,23 +59,46 @@ class AnnouncementController extends Controller
 
     function update(AnnouncementRequest $request, Announcement $announcement){
         
-        $announcement = Announcement::findOrFail($announcement->id)->update([
+        $newAnnouncement = Announcement::findOrFail($announcement->id)->update([
             'name' =>  request('name'),
             'description' =>  request('description'),
             'date' =>  request('date'),
             'project_id' =>  request('project_id'),
         ]);
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se actualizo el anuncio : ' . $announcement->name;
+        $activity->save();
+
         notify()->success('¡El registro se ha actualizado exitosamente!','¡Proceso Exitoso!');
         return redirect()->route('announcements.index');
     }
 
     function show(Announcement $announcement){
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se observaron los detalles del anuncio : ' . $announcement->name;
+        $activity->save();
+
         return view('announcements.show',compact('announcement'));
     }
 
     function destroy(Announcement $announcement){
+
         $announcement->delete();
+
+        $activity = new Activity();
+        $activity->created_at = now();
+        $activity->causer_id = Auth::user()->id;
+        $activity->description = 'Se elimino el anuncio : ' . $announcement->name;
+        $activity->save();
+
         notify()->success('¡El registro ha sido Eliminado exitosamente!','¡Proceso Exitoso!');
+        
         return back() ;
     }
 }
