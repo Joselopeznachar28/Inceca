@@ -301,62 +301,62 @@ return [
         [
             'text'        => 'Dashboard',
             'route'       => 'home',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-house-user',
         ],
         [
             'text'        => 'Categorias',
             'route'       => 'categories.index',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-tasks',
         ],
         [
             'text' => 'Areas',
             'route'  => 'areas.index',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'fas fa-map-marker-alt',
         ],
         [
             'text' => 'Clientes',
             'route'  => 'clients.index',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'fas fa-user-tie',
         ],
         [
             'text'   => 'Instalaciones',
             'route'  => 'installations.index',
-            'icon'   => 'fas fa-fw fa-lock',
+            'icon'   => 'fas fa-building',
         ],
         [
             'text' => 'Trabajos',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'fas fa-briefcase',
             'submenu' => [
                 [
                     'text' => 'Proyectos',
                     'route'  => 'projects.index',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fab fa-buffer',
                 ],
                 [
                     'text' => 'Procesos Administrativos',
                     'route'  => 'processes.index',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-retweet',
                 ],
                 [
                     'text' => 'Avisos',
                     'route'  => 'announcements.index',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-fw fa-exclamation-triangle',
                 ],
             ],
         ],
         [
             'text' => 'Usuarios',
-            'icon' => 'fas fa-fw fa-lock',
+            'icon' => 'fas fa-fw fa-user',
             'submenu' => [
                 [
                     'text'   => 'Registros',
                     'route'  => 'users.index',
-                    'icon'   => 'fas fa-fw fa-lock',
+                    'icon'   => 'fas fa-list-ol',
                 ],
                 [
                     'text' => 'Historial',
                     'route'  => 'activities.index',
-                    'icon' => 'fas fa-fw fa-lock',
+                    'icon' => 'fas fa-history',
                     'can' => 'activities.index'
                 ],
             ],

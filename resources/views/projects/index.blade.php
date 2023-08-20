@@ -48,9 +48,6 @@
                         @can('projects.edit')
                             <a href="{{route('projects.edit', $project)}}"><ion-icon name="create" class="edit"></ion-icon></a>
                         @endcan
-                        @can('projects.pdf')
-                            <a href="{{route('projects.pdf', $project)}}"><ion-icon name="list-box" class="info"></ion-icon></a>
-                        @endcan
                         @can('announcements.create')
                             <a href="{{route('announcements.create', $project)}}"><ion-icon name="warning" class="submit"></ion-icon></a>
                         @endcan
@@ -59,9 +56,12 @@
                                 @csrf
                                 <input type="hidden" name="project_id" value="{{ $project->id }}">
                                 @if (!($project->administrativeProcess))
-                                    <button type="submit" onclick="return confirm('Desea generar el proceso administrativo?')"><ion-icon name="repeat" class="submit"></ion-icon></button>
+                                <button type="submit" onclick="return confirm('Desea generar el proceso administrativo?')"><ion-icon name="repeat" class="submit"></ion-icon></button>
                                 @endif
                             </form>
+                        @endcan
+                        @can('projects.pdf')
+                            <a href="{{route('projects.pdf', $project)}}"><ion-icon name="document-text-outline" class="info"></ion-icon></a>
                         @endcan
                     </td>
                 </tr>
