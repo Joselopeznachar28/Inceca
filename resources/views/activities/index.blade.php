@@ -41,4 +41,5 @@
             @endforeach
         </tbody>
     </table>
+    <span style="text-align: right"><b>{{$activities->links()}}</b></span>
 @endsection

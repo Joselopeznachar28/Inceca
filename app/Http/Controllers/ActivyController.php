@@ -11,7 +11,8 @@ class ActivyController extends Controller
     public function index(){
 
         $array = [];
-        $activities = Activity::all();
+        $activities = Activity::orderBy('id','desc')
+        ->simplePaginate(15);;
 
         foreach ($activities as $key => $activity) {
             $user = User::find($activity->causer_id);
@@ -26,6 +27,6 @@ class ActivyController extends Controller
             array_push(  $array,$objectArray );
         }
 
-        return view('activities.index',compact('array'));
+        return view('activities.index',compact('array','activities'));
     }
 }

@@ -2,6 +2,7 @@
 
 @section('title' , 'Areas')
 
+@section('Sweetalert2',true)
 @section('content_header')
 <div class="d-flex justify-content-between">
     <h1>Areas</h1>
